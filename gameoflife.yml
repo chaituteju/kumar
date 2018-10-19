@@ -1,0 +1,35 @@
+---
+- hosts: tomcat servers
+  become:yes
+  gather_facts: False
+  tasks:
+  - name: Install EPEL-relese
+    yum: name=epel-relese state=present
+
+  - name: Install Java_1.8
+    yum: name=java-1.8.0-openjdk.x86_64 state=present
+ 
+  - name: Install tomcat
+    yum: name=tomcat state=present
+  
+  - name: Download lastest Gameof-life.war
+    get_url: url=http://{{nexusip}}:8081/nexus/content/repositories/gameoflife-repo/{{groupid}}/{{time}}/build}}/{{game-of-life_vesrion}} dest=/tmp/ mode=755
+
+  - name: stop tomcat service
+    service: name=tomcat state=stopped
+
+  - name: Copy artifact to tomcat server
+    shell: cp /tmp/{{game-of-life_vesrion}} /var/lib/tomcat/webapps
+
+  - name: delete link to existing gameoflife version
+    file: path=/var/lib/tomcat/webappas/game-of-life_vesrion state=absent
+
+  - name: start tomcat service
+    service: name=tomcat state=started
+    wait_for: path=/var/lib/tomcat/webapps/{{time}}-{{build}}
+
+  - name: Link latest game oflife version
+    file: src=/var/lib/tomcat/webapps/{{time}} dest=/var/lib/tomcat/webapps/game-of-life_vesrion state=link
+
+  - name: stop ip tables
+    service: name=iptables state=stopped
