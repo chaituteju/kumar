@@ -1,13 +1,12 @@
 ---
-- hosts: tomcat servers
+- hosts: tomcatservers
   become: yes
   gather_facts: False
   tasks:
   - name: Install EPEL-relese
-    yum: 
-      name=epel-relese state=present
+    yum: name=epel-relese state=present
 
-  - name: Install Java_1.8
+  - name: Install java_1.8
     yum: name=java-1.8.0-openjdk.x86_64 state=present
  
   - name: Install tomcat
@@ -27,7 +26,7 @@
 
   - name: start tomcat service
     service: name=tomcat state=started
-    wait_for: path=/var/lib/tomcat/webapps/{{time}}-{{build}}
+  - wait_for: path=/var/lib/tomcat/webapps/{{time}}-{{build}}
 
   - name: Link latest game oflife version
     file: src=/var/lib/tomcat/webapps/{{time}} dest=/var/lib/tomcat/webapps/game-of-life_vesrion state=link
