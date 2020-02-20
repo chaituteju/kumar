@@ -1,0 +1,35 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.36">
+  <actions>
+    <hudson.model.ParametersAction>
+      <safeParameters class="sorted-set"/>
+      <parameters>
+        <com.wangyin.parameter.WHideParameterValue plugin="hidden-parameter@0.0.4">
+          <name>template_id</name>
+          <description></description>
+          <value>12345</value>
+        </com.wangyin.parameter.WHideParameterValue>
+      </parameters>
+      <parameterDefinitionNames>
+        <string>template_id</string>
+      </parameterDefinitionNames>
+    </hudson.model.ParametersAction>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause/>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+  </actions>
+  <queueId>17</queueId>
+  <timestamp>1582197898274</timestamp>
+  <startTime>1582197898277</startTime>
+  <result>FAILURE</result>
+  <duration>23</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList"/>
+</flow-build>

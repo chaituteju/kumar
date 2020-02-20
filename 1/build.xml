@@ -1,0 +1,128 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.36">
+  <actions>
+    <hudson.model.ParametersAction>
+      <safeParameters class="sorted-set"/>
+      <parameters>
+        <com.wangyin.parameter.WHideParameterValue plugin="hidden-parameter@0.0.4">
+          <name>template_id</name>
+          <description></description>
+          <value>12345</value>
+        </com.wangyin.parameter.WHideParameterValue>
+      </parameters>
+      <parameterDefinitionNames>
+        <string>template_id</string>
+      </parameterDefinitionNames>
+    </hudson.model.ParametersAction>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause>
+            <userId>admin</userId>
+          </hudson.model.Cause_-UserIdCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <org.jenkinsci.plugins.workflow.libs.LibrariesAction plugin="workflow-cps-global-lib@2.15">
+      <libraries/>
+    </org.jenkinsci.plugins.workflow.libs.LibrariesAction>
+    <org.jenkinsci.plugins.workflow.cps.EnvActionImpl plugin="workflow-cps@2.80">
+      <env class="tree-map"/>
+    </org.jenkinsci.plugins.workflow.cps.EnvActionImpl>
+  </actions>
+  <queueId>1</queueId>
+  <timestamp>1581821225116</timestamp>
+  <startTime>1581821225123</startTime>
+  <result>FAILURE</result>
+  <duration>2537</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>FAILURE</result>
+    <script>#!/usr/bin/env groovy
+ 
+/**
+        * Sample Jenkinsfile for Jenkins2 Pipeline
+        * from https://github.com/hotwilson/jenkins2/edit/master/Jenkinsfile
+        * by wilsonmar@gmail.com 
+ */
+ 
+import hudson.model.*
+import hudson.EnvVars
+import groovy.json.JsonSlurperClassic
+import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
+import java.net.URL
+ 
+try {
+node {
+stage &apos;\u2776 Stage 1&apos;
+echo &quot;\u2600 BUILD_URL=${env.BUILD_URL}&quot;
+ 
+def workspace = pwd()
+echo &quot;\u2600 workspace=${workspace}&quot;
+ 
+stage &apos;\u2777 Stage 2&apos;
+} // node
+} // try end
+catch (exc) {
+/*
+ err = caughtError
+ currentBuild.result = &quot;FAILURE&quot;
+ String recipient = &apos;infra@lists.jenkins-ci.org&apos;
+ mail subject: &quot;${env.JOB_NAME} (${env.BUILD_NUMBER}) failed&quot;,
+         body: &quot;It appears that ${env.BUILD_URL} is failing, somebody should do something about that&quot;,
+           to: recipient,
+      replyTo: recipient,
+ from: &apos;noreply@ci.jenkins.io&apos;
+*/
+} finally {
+  
+ (currentBuild.result != &quot;ABORTED&quot;) &amp;&amp; node(&quot;master&quot;) {
+     // Send e-mail notifications for failed or unstable builds.
+     // currentBuild.result must be non-null for this step to work.
+     step([$class: &apos;Mailer&apos;,
+        notifyEveryUnstableBuild: true,
+        recipients: &quot;${email_to}&quot;,
+        sendToIndividuals: true])
+ }
+ 
+ // Must re-throw exception to propagate error:
+ if (err) {
+     throw err
+ }
+}</script>
+    <loadedScripts class="map"/>
+    <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
+    <timings class="map">
+      <entry>
+        <string>flowNode</string>
+        <long>345629718</long>
+      </entry>
+      <entry>
+        <string>classLoad</string>
+        <long>521044955</long>
+      </entry>
+      <entry>
+        <string>run</string>
+        <long>1567591394</long>
+      </entry>
+      <entry>
+        <string>parse</string>
+        <long>576896625</long>
+      </entry>
+      <entry>
+        <string>saveProgram</string>
+        <long>380733394</long>
+      </entry>
+    </timings>
+    <sandbox>true</sandbox>
+    <iota>16</iota>
+    <head>1:16</head>
+    <done>true</done>
+    <resumeBlocked>false</resumeBlocked>
+  </execution>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList"/>
+</flow-build>
